@@ -5,7 +5,7 @@ WORKDIR /app
 RUN  apt-get update \
     && apt-get install -y wget \
     && rm -rf /var/lib/apt/lists/*
-RUN echo "${TARGETPLATFORM}" | sed 's@/@-@' > /tmp/targetplatform
+RUN echo "${TARGETPLATFORM}" | sed 's@/@-@g' | sed 's@arm-v7@arm-7@'> /tmp/targetplatform
 RUN wget https://github.com/slackhq/nebula/releases/download/v1.6.0/nebula-$(cat /tmp/targetplatform).tar.gz
 RUN tar xvf nebula-$(cat /tmp/targetplatform).tar.gz
 FROM scratch
